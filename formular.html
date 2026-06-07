@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Poptávka – Konfigurátor kol</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f4f4f9;
+        color: #1a1a2e;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 2rem 1rem;
+      }
+      .container {
+        max-width: 640px;
+        width: 100%;
+      }
+      .back {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: #666;
+        text-decoration: none;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        transition: color 0.15s;
+      }
+      .back:hover {
+        color: #1a1a2e;
+      }
+      .form-wrap {
+        background: #fff;
+        border-radius: 1.25rem;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        padding: 2rem 2.5rem;
+      }
+      .form-wrap h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.25rem;
+      }
+      .form-wrap .form-sub {
+        color: #888;
+        font-size: 0.92rem;
+        margin-bottom: 1.5rem;
+      }
+      .config-summary {
+        background: #f8f8fb;
+        border-radius: 0.75rem;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        border: 1px solid #eee;
+      }
+      .config-summary strong {
+        font-weight: 600;
+      }
+      .config-summary .empty {
+        color: #999;
+        font-style: italic;
+      }
+      .form-group {
+        margin-bottom: 1.25rem;
+      }
+      .form-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+        color: #333;
+      }
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.7rem 1rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 0.75rem;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: border-color 0.15s;
+        outline: none;
+        background: #fafafa;
+      }
+      .form-group input:focus,
+      .form-group textarea:focus {
+        border-color: #1a1a2e;
+        background: #fff;
+      }
+      .form-group textarea {
+        resize: vertical;
+        min-height: 100px;
+      }
+      .form-btn {
+        width: 100%;
+        padding: 0.85rem;
+        border: none;
+        border-radius: 0.75rem;
+        background: #1a1a2e;
+        color: #fff;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.15s;
+      }
+      .form-btn:hover {
+        opacity: 0.85;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <a href="index.html" class="back">← Zpět na konfigurátor</a>
+
+      <div class="form-wrap">
+        <h2>📩 Máš zájem?</h2>
+        <p class="form-sub">Nech nám na sebe kontakt a my se ti ozveme</p>
+
+        <div class="config-summary" id="configSummary">
+          <strong>Tvoje sestava:</strong>
+          <span class="empty">Žádná sestava nebyla vybrána</span>
+        </div>
+
+        <form id="contactForm">
+          <input type="checkbox" name="botcheck" style="display: none" />
+          <div class="form-group">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="jan.novak@example.cz" required />
+          </div>
+          <div class="form-group">
+            <label for="name">Jméno</label>
+            <input type="text" id="name" name="name" placeholder="Jan Novák" required />
+          </div>
+          <div class="form-group">
+            <label for="message">Co chceš / potřebuješ?</label>
+            <textarea
+              id="message"
+              name="message"
+              placeholder="Napiš nám, jaké kolo bys chtěl, na co ho budeš používat, nebo jaké máš otázky…"
+            ></textarea>
+          </div>
+          <button type="submit" class="form-btn">Odeslat poptávku</button>
+        </form>
+        <div
+          id="formFeedback"
+          style="margin-top: 1rem; text-align: center; font-weight: 600; color: #2e7d32; display: none"
+        ></div>
+      </div>
+    </div>
+
+    <script>
+      const params = new URLSearchParams(location.search)
+      const summary = document.getElementById("configSummary")
+
+      const labels = {
+        frameColor: "Barva rámu",
+        wheelType: "Kola",
+        bars: "Řidítka",
+        saddle: "Sedlo",
+        gears: "Převody",
+      }
+
+      const parts = Object.keys(labels)
+        .map((k) => {
+          const v = params.get(k)
+          return v ? `${labels[k]}: ${v}` : null
+        })
+        .filter(Boolean)
+
+      if (parts.length) {
+        summary.innerHTML = "<strong>Tvoje sestava:</strong><br>" + parts.join("<br>")
+      }
+
+      document.getElementById("contactForm").addEventListener("submit", async function (e) {
+        e.preventDefault()
+        const fb = document.getElementById("formFeedback")
+        fb.style.display = "block"
+        fb.style.color = "#1a1a2e"
+        fb.textContent = "⏳ Odesílám..."
+
+        const configText = parts.length ? parts.join("\n") : "Nebyla vybrána žádná sestava"
+
+        try {
+          const res = await fetch("https://api.web3forms.com/submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              access_key: "f5dd69e0-ccca-4514-963e-d8804cc8f511",
+              subject: "Nová poptávka z konfigurátoru kol",
+              from_name: document.getElementById("name").value,
+              email: document.getElementById("email").value,
+              message: document.getElementById("message").value + "\n\n---\n" + configText,
+            }),
+          })
+          const data = await res.json()
+          if (data.success) {
+            fb.style.color = "#2e7d32"
+            fb.textContent = "✅ Děkujeme! Tvá poptávka byla odeslána."
+            this.reset()
+          } else {
+            throw new Error(data.message || "Chyba při odesílání")
+          }
+        } catch (err) {
+          fb.style.color = "#d32f2f"
+          fb.textContent = "❌ " + err.message
+        }
+      })
+    </script>
+  </body>
+</html>

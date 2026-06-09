@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="cs">
   <head>
     <meta charset="UTF-8" />
@@ -37,291 +37,297 @@
       .subtitle {
         text-align: center;
         color: #666;
-        margin-bottom: 2.5rem;
+        margin-bottom: 2rem;
         font-size: 1.05rem;
       }
+      /* Updated layout: full-width config, no preview column */
       .config-wrap {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 2rem;
-        margin-bottom: 2rem;
-      }
-      .preview {
         background: #fff;
-        border-radius: 1.25rem;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-        padding: 2rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 400px;
-        position: relative;
-        overflow: hidden;
-      }
-      .type-badge {
-        position: absolute;
-        top: 1rem;
-        left: 1rem;
-        background: #1a1a2e;
-        color: #fff;
-        padding: 0.3rem 1rem;
-        border-radius: 2rem;
-        font-size: 0.8rem;
-        font-weight: 600;
-      }
-      .preview-svg {
-        max-width: 100%;
-        height: auto;
+        border-radius: 1.5rem;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.08);
+        padding: 2rem 2rem 1.8rem 2rem;
+        margin-bottom: 2rem;
       }
       .options {
         display: flex;
         flex-direction: column;
-        gap: 1rem;
+        gap: 1.25rem;
       }
+      /* Center the options groups and make them nicely balanced */
       .group {
-        background: #fff;
-        border-radius: 1rem;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-        padding: 1rem 1.25rem;
+        background: #fefefe;
+        border-radius: 1.2rem;
+        padding: 1rem 1.5rem;
+        border: 1px solid #eee;
+        transition: box-shadow 0.2s;
       }
       .group-label {
-        font-size: 0.82rem;
-        font-weight: 600;
+        font-size: 0.85rem;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: #888;
-        margin-bottom: 0.6rem;
+        letter-spacing: 0.05em;
+        color: #2c3e66;
+        margin-bottom: 0.7rem;
+        border-left: 4px solid #1a1a2e;
+        padding-left: 0.65rem;
       }
       .group-options {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.45rem;
+        gap: 0.65rem;
+        margin-top: 0.25rem;
       }
       .group-options button {
-        padding: 0.4rem 1rem;
-        border: 2px solid #e0e0e0;
-        border-radius: 2rem;
-        background: transparent;
+        padding: 0.5rem 1.2rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 2.2rem;
+        background: #ffffff;
         font-family: inherit;
-        font-size: 0.88rem;
+        font-size: 0.9rem;
         font-weight: 500;
-        color: #444;
+        color: #1e293b;
         cursor: pointer;
-        transition: all 0.15s ease;
+        transition: all 0.2s ease;
+        box-shadow: 0 1px 1px rgba(0,0,0,0.02);
       }
       .group-options button:hover {
-        border-color: #888;
-        background: #fafafa;
+        border-color: #94a3b8;
+        background: #f8fafc;
+        transform: translateY(-1px);
       }
       .group-options button.active {
         border-color: #1a1a2e;
         background: #1a1a2e;
         color: #fff;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
       }
       .group-options button:disabled {
-        opacity: 0.35;
+        opacity: 0.4;
         cursor: not-allowed;
+        transform: none;
       }
       .height-input {
         display: flex;
         align-items: center;
-        gap: 0.5rem;
+        gap: 1rem;
+        flex-wrap: wrap;
+        margin-top: 0.5rem;
       }
       .height-input input {
-        width: 90px;
-        padding: 0.4rem 0.75rem;
-        border: 2px solid #e0e0e0;
-        border-radius: 0.75rem;
+        width: 110px;
+        padding: 0.5rem 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 2rem;
         font-family: inherit;
         font-size: 0.95rem;
         outline: none;
-        transition: border-color 0.15s;
-        background: #fafafa;
+        transition: border-color 0.2s;
+        background: #fff;
         text-align: center;
+        font-weight: 500;
       }
       .height-input input:focus {
         border-color: #1a1a2e;
-        background: #fff;
+        box-shadow: 0 0 0 2px rgba(26,26,46,0.1);
       }
       .height-input span {
         font-size: 0.9rem;
-        color: #666;
+        color: #475569;
+        font-weight: 500;
       }
       .summary {
         background: #fff;
         border-radius: 1.25rem;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
-        padding: 1.5rem 2rem;
-        margin-bottom: 3rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        padding: 1.2rem 1.8rem;
+        margin-bottom: 2rem;
         text-align: center;
+        border: 1px solid #edf2f7;
       }
       .summary h3 {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         text-transform: uppercase;
-        letter-spacing: 0.04em;
-        color: #888;
+        letter-spacing: 0.05em;
+        color: #5b6e8c;
         margin-bottom: 0.5rem;
       }
       .summary-items {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
-        gap: 0.5rem 1.25rem;
+        gap: 0.6rem 1.5rem;
       }
       .summary-items span {
-        font-size: 0.95rem;
+        font-size: 0.93rem;
+        background: #f8fafc;
+        padding: 0.2rem 0.8rem;
+        border-radius: 2rem;
       }
       .summary-items .val {
-        font-weight: 600;
+        font-weight: 700;
+        color: #0f172a;
       }
-
       .form-section {
         background: #fff;
-        border-radius: 1.25rem;
-        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        border-radius: 1.5rem;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.05);
         padding: 2rem 2.5rem;
         margin-bottom: 2rem;
       }
       .form-section h2 {
-        font-size: 1.3rem;
-        margin-bottom: 0.25rem;
+        font-size: 1.4rem;
+        font-weight: 700;
+        margin-bottom: 0.3rem;
+        letter-spacing: -0.2px;
       }
       .form-section .form-sub {
-        color: #888;
+        color: #64748b;
         font-size: 0.92rem;
         margin-bottom: 1.5rem;
+        border-left: 3px solid #cbd5e1;
+        padding-left: 1rem;
       }
       .config-description {
-        background: #f8f8fb;
-        border-radius: 0.75rem;
-        padding: 1rem 1.25rem;
-        margin-bottom: 1.5rem;
-        font-size: 0.88rem;
-        line-height: 1.6;
-        border: 1px solid #eee;
+        background: #f1f5f9;
+        border-radius: 1rem;
+        padding: 1rem 1.5rem;
+        margin-bottom: 1.8rem;
+        font-size: 0.9rem;
+        line-height: 1.5;
+        border: 1px solid #e2e8f0;
+        color: #0f172a;
       }
       .config-description strong {
-        font-weight: 600;
+        font-weight: 700;
+        color: #0f172a;
       }
       .config-description .empty {
-        color: #999;
+        color: #94a3b8;
         font-style: italic;
       }
       .form-group {
-        margin-bottom: 1.25rem;
+        margin-bottom: 1.3rem;
       }
       .form-group label {
         display: block;
         font-size: 0.85rem;
         font-weight: 600;
-        margin-bottom: 0.35rem;
-        color: #333;
+        margin-bottom: 0.4rem;
+        color: #1e293b;
       }
       .form-group input,
       .form-group textarea {
         width: 100%;
-        padding: 0.7rem 1rem;
-        border: 2px solid #e0e0e0;
-        border-radius: 0.75rem;
+        padding: 0.75rem 1rem;
+        border: 2px solid #e2e8f0;
+        border-radius: 1rem;
         font-family: inherit;
         font-size: 0.95rem;
-        transition: border-color 0.15s;
+        transition: all 0.2s;
         outline: none;
-        background: #fafafa;
+        background: #fefefe;
       }
       .form-group input:focus,
       .form-group textarea:focus {
         border-color: #1a1a2e;
-        background: #fff;
+        background: #ffffff;
+        box-shadow: 0 0 0 3px rgba(26,26,46,0.08);
       }
       .form-group input:disabled {
-        background: #eee;
-        color: #888;
+        background: #f1f5f9;
+        color: #475569;
         cursor: not-allowed;
       }
       .form-group textarea {
         resize: vertical;
-        min-height: 80px;
+        min-height: 85px;
       }
       .form-row {
         display: flex;
-        gap: 0.75rem;
+        gap: 1rem;
         align-items: flex-start;
       }
       .form-row .form-group {
         flex: 1;
       }
       .btn-secondary {
-        padding: 0.6rem 1.5rem;
-        border: 2px solid #1a1a2e;
-        border-radius: 0.75rem;
+        padding: 0.7rem 1.8rem;
+        border: 2px solid #1e293b;
+        border-radius: 2.5rem;
         background: transparent;
-        color: #1a1a2e;
+        color: #1e293b;
         font-family: inherit;
         font-size: 0.9rem;
         font-weight: 600;
         cursor: pointer;
-        transition: all 0.15s;
-        margin-bottom: 1.25rem;
+        transition: all 0.2s;
+        margin-bottom: 0.6rem;
       }
       .btn-secondary:hover {
-        background: #1a1a2e;
+        background: #1e293b;
         color: #fff;
+        transform: translateY(-1px);
       }
       .btn-secondary:disabled {
-        opacity: 0.4;
+        opacity: 0.45;
         cursor: not-allowed;
-        background: transparent;
-        color: #1a1a2e;
+        transform: none;
       }
       .code-row {
         display: flex;
         gap: 0.75rem;
         align-items: center;
+        flex-wrap: wrap;
       }
       .code-row input {
-        flex: 1;
+        flex: 2;
+        min-width: 160px;
       }
       .code-status {
         font-size: 0.85rem;
         font-weight: 600;
-        min-width: 100px;
+        min-width: 110px;
       }
       .form-btn {
         width: 100%;
-        padding: 0.85rem;
+        padding: 0.9rem;
         border: none;
-        border-radius: 0.75rem;
+        border-radius: 3rem;
         background: #1a1a2e;
         color: #fff;
         font-family: inherit;
         font-size: 1rem;
         font-weight: 600;
         cursor: pointer;
-        transition: opacity 0.15s;
+        transition: opacity 0.2s, transform 0.1s;
+        margin-top: 0.5rem;
       }
       .form-btn:hover:not(:disabled) {
-        opacity: 0.85;
+        opacity: 0.88;
+        transform: scale(0.99);
       }
       .form-btn:disabled {
-        opacity: 0.4;
+        opacity: 0.45;
         cursor: not-allowed;
       }
       .form-feedback {
-        margin-top: 1rem;
+        margin-top: 1.2rem;
         text-align: center;
         font-weight: 600;
         display: none;
+        padding: 0.6rem;
+        border-radius: 2rem;
+        background: #f8fafc;
       }
-      @media (max-width: 768px) {
-        .config-wrap {
-          grid-template-columns: 1fr;
-        }
+      @media (max-width: 700px) {
         body {
-          padding: 1rem 0.5rem;
+          padding: 1rem 0.8rem;
+        }
+        .config-wrap {
+          padding: 1.5rem;
         }
         .form-section {
-          padding: 1.5rem 1.25rem;
+          padding: 1.5rem;
         }
         .form-row {
           flex-direction: column;
@@ -331,6 +337,10 @@
           flex-direction: column;
           align-items: stretch;
         }
+        .group-options button {
+          padding: 0.4rem 1rem;
+          font-size: 0.85rem;
+        }
       }
     </style>
   </head>
@@ -339,105 +349,15 @@
       <h1>Čudloprda</h1>
       <p class="subtitle">Sestav si svůj vysněný model a rezervuj si zkušební jízdu</p>
 
-      <!-- ===== CONFIGURATOR ===== -->
+      <!-- ===== CONFIGURATOR (No images, centered groups) ===== -->
       <div class="config-wrap">
-        <div class="preview">
-          <div class="type-badge" id="typeBadge">Koloběžka</div>
-          <svg class="preview-svg" id="previewSvg" viewBox="0 0 400 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <!-- bike version shown by default; scooter has different frame -->
-            <g id="bikeGroup">
-              <!-- frame -->
-              <line
-                id="sv-frame"
-                x1="80"
-                y1="200"
-                x2="280"
-                y2="150"
-                stroke="#d32f2f"
-                stroke-width="7"
-                stroke-linecap="round"
-              />
-              <line
-                id="sv-seat"
-                x1="120"
-                y1="140"
-                x2="200"
-                y2="70"
-                stroke="#d32f2f"
-                stroke-width="7"
-                stroke-linecap="round"
-              />
-              <line
-                id="sv-head"
-                x1="230"
-                y1="70"
-                x2="280"
-                y2="150"
-                stroke="#d32f2f"
-                stroke-width="7"
-                stroke-linecap="round"
-              />
-              <line
-                id="sv-chain"
-                x1="110"
-                y1="210"
-                x2="210"
-                y2="175"
-                stroke="#d32f2f"
-                stroke-width="5"
-                stroke-linecap="round"
-              />
-              <!-- wheels -->
-              <circle cx="100" cy="220" r="42" stroke="#333" stroke-width="5" fill="none" />
-              <line x1="100" y1="180" x2="100" y2="260" stroke="#555" stroke-width="2" />
-              <line x1="60" y1="220" x2="140" y2="220" stroke="#555" stroke-width="2" />
-              <circle cx="300" cy="220" r="42" stroke="#333" stroke-width="5" fill="none" />
-              <line x1="300" y1="180" x2="300" y2="260" stroke="#555" stroke-width="2" />
-              <line x1="260" y1="220" x2="340" y2="220" stroke="#555" stroke-width="2" />
-              <!-- handlebars -->
-              <line x1="270" y1="60" x2="310" y2="50" stroke="#444" stroke-width="6" stroke-linecap="round" />
-              <line x1="285" y1="65" x2="295" y2="90" stroke="#444" stroke-width="5" stroke-linecap="round" />
-              <!-- saddle -->
-              <rect x="95" y="55" width="50" height="14" rx="7" fill="#222" />
-              <line x1="115" y1="68" x2="120" y2="140" stroke="#888" stroke-width="5" stroke-linecap="round" />
-              <!-- chainring -->
-              <circle cx="190" cy="190" r="18" stroke="#666" stroke-width="3" fill="none" />
-              <circle cx="190" cy="190" r="6" stroke="#666" stroke-width="2" fill="none" />
-              <!-- pedals -->
-              <rect x="186" y="205" width="8" height="16" rx="3" fill="#555" id="sv-pedals" />
-            </g>
-            <g id="scooterGroup" style="display: none">
-              <!-- scooter frame: step-through -->
-              <line x1="80" y1="190" x2="180" y2="170" stroke="#d32f2f" stroke-width="7" stroke-linecap="round" />
-              <line x1="180" y1="170" x2="180" y2="195" stroke="#d32f2f" stroke-width="7" stroke-linecap="round" />
-              <line x1="180" y1="195" x2="260" y2="185" stroke="#d32f2f" stroke-width="7" stroke-linecap="round" />
-              <line x1="170" y1="120" x2="270" y2="70" stroke="#d32f2f" stroke-width="7" stroke-linecap="round" />
-              <line x1="180" y1="170" x2="170" y2="120" stroke="#d32f2f" stroke-width="7" stroke-linecap="round" />
-              <!-- deck -->
-              <rect x="95" y="195" width="90" height="14" rx="4" fill="#d32f2f" opacity="0.6" />
-              <!-- wheels -->
-              <circle cx="90" cy="220" r="35" stroke="#333" stroke-width="5" fill="none" />
-              <line x1="90" y1="187" x2="90" y2="253" stroke="#555" stroke-width="2" />
-              <line x1="57" y1="220" x2="123" y2="220" stroke="#555" stroke-width="2" />
-              <circle cx="290" cy="220" r="35" stroke="#333" stroke-width="5" fill="none" />
-              <line x1="290" y1="187" x2="290" y2="253" stroke="#555" stroke-width="2" />
-              <line x1="257" y1="220" x2="323" y2="220" stroke="#555" stroke-width="2" />
-              <!-- handlebars -->
-              <line x1="265" y1="50" x2="300" y2="42" stroke="#444" stroke-width="6" stroke-linecap="round" />
-              <line x1="275" y1="55" x2="280" y2="80" stroke="#444" stroke-width="5" stroke-linecap="round" />
-              <!-- saddle -->
-              <rect x="130" y="48" width="45" height="12" rx="6" fill="#222" />
-              <line x1="148" y1="58" x2="158" y2="120" stroke="#888" stroke-width="5" stroke-linecap="round" />
-            </g>
-          </svg>
-        </div>
         <div class="options" id="options"></div>
       </div>
 
       <div class="summary" id="summary">
         <h3>Tvoje sestava</h3>
         <div class="summary-items" id="summaryItems">
-          <span style="color: #999">Zatím nic nevybráno</span>
+          <span style="color: #94a3b8">✨ Zatím nic nevybráno</span>
         </div>
       </div>
 
@@ -515,7 +435,7 @@
         emailjs.init(EMAILJS_PUBLIC_KEY)
       }
 
-      // ── Configurator ───────────────────────────────────────────────────
+      // ── Configurator data (no visuals) ──────────────────────────────
       const groups = [
         {
           id: "type",
@@ -570,7 +490,7 @@
         },
       ]
 
-      const sel = { type: "scooter" }
+      let sel = { type: "scooter" }
       let riderHeight = 175
 
       function visibleGroups() {
@@ -603,7 +523,7 @@
           <div class="group">
             <div class="group-label">Výška jezdce</div>
             <div class="height-input">
-              <input type="number" id="heightInput" min="100" max="250" value="${riderHeight}" />
+              <input type="number" id="heightInput" min="100" max="250" value="${riderHeight}" step="1" />
               <span>cm</span>
             </div>
           </div>
@@ -619,10 +539,12 @@
 
         const hInput = document.getElementById("heightInput")
         if (hInput) {
-          hInput.addEventListener("input", () => {
-            riderHeight = parseInt(hInput.value) || 175
-            updateSummary()
-            updateConfigDesc()
+          hInput.addEventListener("input", (e) => {
+            let val = parseInt(e.target.value)
+            if (isNaN(val)) val = 175
+            riderHeight = Math.min(250, Math.max(100, val))
+            if (e.target.value != riderHeight) e.target.value = riderHeight
+            updateSummaryAndDesc()
           })
         }
       }
@@ -671,22 +593,7 @@
       }
 
       function updateAll() {
-        updatePreview()
-        updateSummary()
-        updateConfigDesc()
-      }
-
-      function updatePreview() {
-        const isBike = sel.type === "bike"
-        document.getElementById("typeBadge").textContent = isBike ? "Kolo" : "Koloběžka"
-        document.getElementById("bikeGroup").style.display = isBike ? "" : "none"
-        document.getElementById("scooterGroup").style.display = isBike ? "none" : ""
-
-        // color frame based on … well, no color option anymore, use a nice default
-        const frameColor = "#e53935"
-        document.querySelectorAll("#sv-frame, #sv-seat, #sv-head, #sv-chain").forEach((el) => {
-          if (el) el.setAttribute("stroke", frameColor)
-        })
+        updateSummaryAndDesc()
       }
 
       function labelFor(gid, oid) {
@@ -723,36 +630,41 @@
         return parts.join(", ")
       }
 
-      function updateSummary() {
+      function updateSummaryAndDesc() {
         const items = document.getElementById("summaryItems")
         const picks = visibleGroups()
           .map((g) => {
             const o = g.options.find((opt) => opt.id === sel[g.id])
             return o
-              ? `<span><span style="color:#888;">${g.label}:</span> <span class="val">${o.label}</span></span>`
+              ? `<span><span style="color:#5b6e8c;">${g.label}:</span> <span class="val">${o.label}</span></span>`
               : null
           })
           .filter(Boolean)
-        picks.push(`<span><span style="color:#888;">Výška:</span> <span class="val">${riderHeight} cm</span></span>`)
-        items.innerHTML = picks.length ? picks.join("") : '<span style="color:#999;">Zatím nic nevybráno</span>'
-      }
+        picks.push(`<span><span style="color:#5b6e8c;">Výška:</span> <span class="val">${riderHeight} cm</span></span>`)
+        if (picks.length) items.innerHTML = picks.join("")
+        else items.innerHTML = '<span style="color:#94a3b8;">✨ Zatím nic nevybráno</span>'
 
-      function updateConfigDesc() {
-        const el = document.getElementById("configDescText")
+        // update config description text
+        const descSpan = document.getElementById("configDescText")
         const sentence = configSentence()
-        el.textContent = sentence
-        el.className = sel.type ? "" : "empty"
+        descSpan.textContent = sentence
+        descSpan.className = sel.type ? "" : "empty"
       }
 
-      // ── Booking form ──────────────────────────────────────────────────
+      // ── Booking form logic (unchanged, robust) ─────────────────────────
       let verifyCode = null
       let isVerified = false
 
       function showFeedback(msg, color) {
         const fb = document.getElementById("formFeedback")
         fb.textContent = msg
-        fb.style.color = color || "#1a1a2e"
+        fb.style.color = color || "#1e293b"
         fb.style.display = "block"
+        setTimeout(() => {
+          if (document.getElementById("formFeedback").textContent === msg) {
+            setTimeout(() => { if(fb.textContent === msg) fb.style.display = "none" }, 4000)
+          }
+        }, 3800)
       }
 
       function hideFeedback() {
@@ -852,7 +764,7 @@
             message: message || "—",
           })
 
-          // send confirmation to user
+          // confirmation to user
           await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TPL_ORDER, {
             to_email: email,
             user_email: email,
@@ -872,6 +784,8 @@
           document.getElementById("submitBtn").disabled = true
           isVerified = false
           verifyCode = null
+          document.getElementById("codeStatus").textContent = ""
+          document.getElementById("code").value = ""
         } catch (err) {
           btn.disabled = false
           btn.textContent = "Odeslat rezervaci"
@@ -879,10 +793,9 @@
         }
       })
 
-      // set min date for date input
       document.getElementById("date").min = "2030-09-01"
 
-      // ── Init ──────────────────────────────────────────────────────────
+      // ── Initialize config & UI ─────────────────────────────────────────
       renderOptions()
       updateAll()
     </script>

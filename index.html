@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="cs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Čudloprda – Konfigurátor &amp; rezervace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Inter", sans-serif;
+        background: #f4f4f9;
+        color: #1a1a2e;
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 2rem 1rem;
+      }
+      .container {
+        max-width: 1100px;
+        width: 100%;
+      }
+      h1 {
+        text-align: center;
+        font-size: 2.25rem;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        margin-bottom: 0.25rem;
+      }
+      .subtitle {
+        text-align: center;
+        color: #666;
+        margin-bottom: 2.5rem;
+        font-size: 1.05rem;
+      }
+      .config-wrap {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+      .preview {
+        background: #fff;
+        border-radius: 1.25rem;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        padding: 2rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        position: relative;
+        overflow: hidden;
+      }
+      .type-badge {
+        position: absolute;
+        top: 1rem;
+        left: 1rem;
+        background: #1a1a2e;
+        color: #fff;
+        padding: 0.3rem 1rem;
+        border-radius: 2rem;
+        font-size: 0.8rem;
+        font-weight: 600;
+      }
+      .preview-svg {
+        max-width: 100%;
+        height: auto;
+      }
+      .options {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+      }
+      .group {
+        background: #fff;
+        border-radius: 1rem;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        padding: 1rem 1.25rem;
+      }
+      .group-label {
+        font-size: 0.82rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #888;
+        margin-bottom: 0.6rem;
+      }
+      .group-options {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+      }
+      .group-options button {
+        padding: 0.4rem 1rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 2rem;
+        background: transparent;
+        font-family: inherit;
+        font-size: 0.88rem;
+        font-weight: 500;
+        color: #444;
+        cursor: pointer;
+        transition: all 0.15s ease;
+      }
+      .group-options button:hover {
+        border-color: #888;
+        background: #fafafa;
+      }
+      .group-options button.active {
+        border-color: #1a1a2e;
+        background: #1a1a2e;
+        color: #fff;
+      }
+      .group-options button:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+      }
+      .height-input {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .height-input input {
+        width: 90px;
+        padding: 0.4rem 0.75rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 0.75rem;
+        font-family: inherit;
+        font-size: 0.95rem;
+        outline: none;
+        transition: border-color 0.15s;
+        background: #fafafa;
+        text-align: center;
+      }
+      .height-input input:focus {
+        border-color: #1a1a2e;
+        background: #fff;
+      }
+      .height-input span {
+        font-size: 0.9rem;
+        color: #666;
+      }
+      .summary {
+        background: #fff;
+        border-radius: 1.25rem;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        padding: 1.5rem 2rem;
+        margin-bottom: 3rem;
+        text-align: center;
+      }
+      .summary h3 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        color: #888;
+        margin-bottom: 0.5rem;
+      }
+      .summary-items {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem 1.25rem;
+      }
+      .summary-items span {
+        font-size: 0.95rem;
+      }
+      .summary-items .val {
+        font-weight: 600;
+      }
+
+      .form-section {
+        background: #fff;
+        border-radius: 1.25rem;
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+        padding: 2rem 2.5rem;
+        margin-bottom: 2rem;
+      }
+      .form-section h2 {
+        font-size: 1.3rem;
+        margin-bottom: 0.25rem;
+      }
+      .form-section .form-sub {
+        color: #888;
+        font-size: 0.92rem;
+        margin-bottom: 1.5rem;
+      }
+      .config-description {
+        background: #f8f8fb;
+        border-radius: 0.75rem;
+        padding: 1rem 1.25rem;
+        margin-bottom: 1.5rem;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        border: 1px solid #eee;
+      }
+      .config-description strong {
+        font-weight: 600;
+      }
+      .config-description .empty {
+        color: #999;
+        font-style: italic;
+      }
+      .form-group {
+        margin-bottom: 1.25rem;
+      }
+      .form-group label {
+        display: block;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 0.35rem;
+        color: #333;
+      }
+      .form-group input,
+      .form-group textarea {
+        width: 100%;
+        padding: 0.7rem 1rem;
+        border: 2px solid #e0e0e0;
+        border-radius: 0.75rem;
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: border-color 0.15s;
+        outline: none;
+        background: #fafafa;
+      }
+      .form-group input:focus,
+      .form-group textarea:focus {
+        border-color: #1a1a2e;
+        background: #fff;
+      }
+      .form-group input:disabled {
+        background: #eee;
+        color: #888;
+        cursor: not-allowed;
+      }
+      .form-group textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+      .form-row {
+        display: flex;
+        gap: 0.75rem;
+        align-items: flex-start;
+      }
+      .form-row .form-group {
+        flex: 1;
+      }
+      .btn-secondary {
+        padding: 0.6rem 1.5rem;
+        border: 2px solid #1a1a2e;
+        border-radius: 0.75rem;
+        background: transparent;
+        color: #1a1a2e;
+        font-family: inherit;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.15s;
+        margin-bottom: 1.25rem;
+      }
+      .btn-secondary:hover {
+        background: #1a1a2e;
+        color: #fff;
+      }
+      .btn-secondary:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+        background: transparent;
+        color: #1a1a2e;
+      }
+      .code-row {
+        display: flex;
+        gap: 0.75rem;
+        align-items: center;
+      }
+      .code-row input {
+        flex: 1;
+      }
+      .code-status {
+        font-size: 0.85rem;
+        font-weight: 600;
+        min-width: 100px;
+      }
+      .form-btn {
+        width: 100%;
+        padding: 0.85rem;
+        border: none;
+        border-radius: 0.75rem;
+        background: #1a1a2e;
+        color: #fff;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.15s;
+      }
+      .form-btn:hover:not(:disabled) {
+        opacity: 0.85;
+      }
+      .form-btn:disabled {
+        opacity: 0.4;
+        cursor: not-allowed;
+      }
+      .form-feedback {
+        margin-top: 1rem;
+        text-align: center;
+        font-weight: 600;
+        display: none;
+      }
+      @media (max-width: 768px) {
+        .config-wrap {
+          grid-template-columns: 1fr;
+        }
+        body {
+          padding: 1rem 0.5rem;
+        }
+        .form-section {
+          padding: 1.5rem 1.25rem;
+        }
+        .form-row {
+          flex-direction: column;
+          gap: 0;
+        }
+        .code-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Čudloprda</h1>
+      <p class="subtitle">Sestav si svůj vysněný model a rezervuj si zkušební jízdu</p>
+
+      <!-- ===== CONFIGURATOR ===== -->
+      <div class="config-wrap">
+        <div class="preview">
+          <div class="type-badge" id="typeBadge">Koloběžka</div>
+          <svg class="preview-svg" id="previewSvg" viewBox="0 0 400 280" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <!-- bike version shown by default; scooter has different frame -->
+            <g id="bikeGroup">
+              <!-- frame -->
+              <line
+                id="sv-frame"
+                x1="80"
+                y1="200"
+                x2="280"
+                y2="150"
+                stroke="#d32f2f"
+                stroke-width="7"
+                stroke-linecap="round"
+              />
+              <line
+                id="sv-seat"
+                x1="120"
+                y1="140"
+                x2="200"
+                y2="70"
+                stroke="#d32f2f"
+                stroke-width="7"
+                stroke-linecap="round"
+              />
+              <line
+                id="sv-head"
+                x1="230"
+                y1="70"
+                x2="280"
+                y2="150"
+                stroke="#d32f2f"
+                stroke-width="7"
+                stroke-linecap="round"
+              />
+              <line
+                id="sv-chain"
+                x1="110"
+                y1="210"
+                x2="210"
+                y2="175"
+                stroke="#d32f2f"
+                stroke-width="5"
+                stroke-linecap="round"
+              />
+              <!-- wheels -->
+              <circle cx="100" cy="220" r="42" stroke="#333" stroke-width="5" fill="none" />
+              <line x1="100" y1="180" x2="100" y2="260" stroke="#555" stroke-width="2" />
+              <line x1="60" y1="220" x2="140" y2="220" stroke="#555" stroke-width="2" />
+              <circle cx="300" cy="220" r="42" stroke="#333" stroke-width="5" fill="none" />
+              <line x1="300" y1="180" x2="300" y2="260" stroke="#555" stroke-width="2" />
+              <line x1="260" y1="220" x2="340" y2="220" stroke="#555" stroke-width="2" />
+              <!-- handlebars -->
+              <line x1="270" y1="60" x2="310" y2="50" stroke="#444" stroke-width="6" stroke-linecap="round" />
+              <line x1="285" y1="65" x2="295" y2="90" stroke="#444" stroke-width="5" stroke-linecap="round" />
+              <!-- saddle -->
+              <rect x="95" y="55" width="50" height="14" rx="7" fill="#222" />
+              <line x1="115" y1="68" x2="120" y2="140" stroke="#888" stroke-width="5" stroke-linecap="round" />
+              <!-- chainring -->
+              <circle cx="190" cy="190" r="18" stroke="#666" stroke-width="3" fill="none" />
+              <circle cx="190" cy="190" r="6" stroke="#666" stroke-width="2" fill="none" />
+              <!-- pedals -->
+              <rect x="186" y="205" width="8" height="16" rx="3" fill="#555" id="sv-pedals" />
+            </g>
+            <g id="scooterGroup" style="display: none">
+              <!-- scooter frame: step-through -->
+              <line x1="80" y1="190" x2="180" y2="170" stroke="#d32f2f" stroke-width="7" stroke-linecap="round" />
+              <line x1="180" y1="170" x2="180" y2="195" stroke="#d32f2f" stroke-width="7" stroke-linecap="round" />
+              <line x1="180" y1="195" x2="260" y2="185" stroke="#d32f2f" stroke-width="7" stroke-linecap="round" />
+              <line x1="170" y1="120" x2="270" y2="70" stroke="#d32f2f" stroke-width="7" stroke-linecap="round" />
+              <line x1="180" y1="170" x2="170" y2="120" stroke="#d32f2f" stroke-width="7" stroke-linecap="round" />
+              <!-- deck -->
+              <rect x="95" y="195" width="90" height="14" rx="4" fill="#d32f2f" opacity="0.6" />
+              <!-- wheels -->
+              <circle cx="90" cy="220" r="35" stroke="#333" stroke-width="5" fill="none" />
+              <line x1="90" y1="187" x2="90" y2="253" stroke="#555" stroke-width="2" />
+              <line x1="57" y1="220" x2="123" y2="220" stroke="#555" stroke-width="2" />
+              <circle cx="290" cy="220" r="35" stroke="#333" stroke-width="5" fill="none" />
+              <line x1="290" y1="187" x2="290" y2="253" stroke="#555" stroke-width="2" />
+              <line x1="257" y1="220" x2="323" y2="220" stroke="#555" stroke-width="2" />
+              <!-- handlebars -->
+              <line x1="265" y1="50" x2="300" y2="42" stroke="#444" stroke-width="6" stroke-linecap="round" />
+              <line x1="275" y1="55" x2="280" y2="80" stroke="#444" stroke-width="5" stroke-linecap="round" />
+              <!-- saddle -->
+              <rect x="130" y="48" width="45" height="12" rx="6" fill="#222" />
+              <line x1="148" y1="58" x2="158" y2="120" stroke="#888" stroke-width="5" stroke-linecap="round" />
+            </g>
+          </svg>
+        </div>
+        <div class="options" id="options"></div>
+      </div>
+
+      <div class="summary" id="summary">
+        <h3>Tvoje sestava</h3>
+        <div class="summary-items" id="summaryItems">
+          <span style="color: #999">Zatím nic nevybráno</span>
+        </div>
+      </div>
+
+      <!-- ===== RESERVATION FORM ===== -->
+      <div class="form-section" id="formSection">
+        <h2>Rezervace zkušební jízdy</h2>
+        <p class="form-sub">
+          Vyberte si den, kdy byste chtěli vámi vybraný model vyzkoušet a uveďte email, na který vás máme kontaktovat
+          pro upřesnění času zkušební jízdy!
+        </p>
+
+        <div class="config-description" id="configDescription">
+          <strong>Vybraný model:</strong>
+          <span id="configDescText" class="empty">Nejprve si sestavte model v konfigurátoru</span>
+        </div>
+
+        <form id="bookingForm" novalidate>
+          <div class="form-group">
+            <label for="date">Datum zkušební jízdy</label>
+            <input type="date" id="date" name="date" min="2030-09-01" value="2030-09-01" required />
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Jméno</label>
+              <input type="text" id="name" name="name" placeholder="Jan Novák" required />
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" name="email" placeholder="jan.novak@example.cz" required />
+            </div>
+          </div>
+
+          <button type="button" class="btn-secondary" id="sendCodeBtn">Odeslat ověřovací kód</button>
+
+          <div id="codeGroup" style="display: none">
+            <div class="form-group">
+              <label for="code">Ověřovací kód</label>
+              <div class="code-row">
+                <input
+                  type="text"
+                  id="code"
+                  inputmode="numeric"
+                  pattern="[0-9]{6}"
+                  maxlength="6"
+                  placeholder="000000"
+                  autocomplete="off"
+                />
+                <span class="code-status" id="codeStatus"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="message">Zpráva (nepovinná)</label>
+            <textarea id="message" name="message" placeholder="Sem napište případné dotazy nebo poznámky..."></textarea>
+          </div>
+
+          <button type="submit" class="form-btn" id="submitBtn" disabled>Odeslat rezervaci</button>
+        </form>
+        <div class="form-feedback" id="formFeedback"></div>
+      </div>
+    </div>
+
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <script>
+      // ── EmailJS configuration ──────────────────────────────────────────
+      // 1. Sign up at https://www.emailjs.com/
+      // 2. Create an Email service and copy its ID
+      // 3. Set up 2 templates:
+      //    - OTP "template_0395l1e": {{to_email}}, {{code}}
+      //    - Order "template_flsmlum": {{to_email}}, {{user_name}}, {{date}}, {{config}}, {{user_email}}, {{message}}
+      // 4. Replace the values below with your own:
+      const EMAILJS_PUBLIC_KEY = "4DZFBvDg43eAWNKTh"
+      const EMAILJS_SERVICE_ID = "service_vk719pe"
+      const EMAILJS_TPL_VERIFY = "template_0395l1e"
+      const EMAILJS_TPL_ORDER = "template_flsmlum"
+      const ADMIN_EMAIL = "cudloprd@gmail.com"
+
+      if (EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
+        emailjs.init(EMAILJS_PUBLIC_KEY)
+      }
+
+      // ── Configurator ───────────────────────────────────────────────────
+      const groups = [
+        {
+          id: "type",
+          label: "Typ",
+          options: [
+            { id: "scooter", label: "Koloběžka" },
+            { id: "bike", label: "Kolo" },
+          ],
+        },
+        {
+          id: "brake",
+          label: "Brzda",
+          options: [
+            { id: "disc", label: "Kotoučová brzda" },
+            { id: "jula", label: "Pístová brzda Jůla" },
+          ],
+        },
+        {
+          id: "wheel",
+          label: "Kola a pneumatiky",
+          options: [
+            { id: "normal", label: "Obyčejné kolo a pneumatika" },
+            { id: "ratatanek", label: "Celoodpružený Ratatánek se segmentovou vícekomorovou pneumatikou" },
+          ],
+        },
+        {
+          id: "transmission",
+          label: "Převodovka",
+          show: () => sel.type === "bike",
+          options: [
+            { id: "derailleur", label: "Přehazovka a řetěz" },
+            { id: "melinda", label: "Automatická převodovka MELinDa a bezřetězový pohon" },
+          ],
+        },
+        {
+          id: "frontDrive",
+          label: "Pohon předního kola",
+          show: () => sel.type === "bike",
+          options: [
+            { id: "none", label: "Bez pohonu" },
+            { id: "elisin", label: "Pohon předního kola ELIŠin" },
+          ],
+        },
+        {
+          id: "pedals",
+          label: "Šlapky",
+          show: () => sel.type === "bike",
+          options: [
+            { id: "normal", label: "Obyčejné šlapky" },
+            { id: "builtin", label: "Zabudované šlapky v rámu" },
+          ],
+        },
+      ]
+
+      const sel = { type: "scooter" }
+      let riderHeight = 175
+
+      function visibleGroups() {
+        return groups.filter((g) => !g.show || g.show())
+      }
+
+      function renderOptions() {
+        const root = document.getElementById("options")
+        const vg = visibleGroups()
+        root.innerHTML =
+          vg
+            .map(
+              (g) => `
+          <div class="group">
+            <div class="group-label">${g.label}</div>
+            <div class="group-options" data-group="${g.id}">
+              ${g.options
+                .map(
+                  (o) => `
+                <button data-id="${o.id}" class="${sel[g.id] === o.id ? "active" : ""}">${o.label}</button>
+              `,
+                )
+                .join("")}
+            </div>
+          </div>
+        `,
+            )
+            .join("") +
+          `
+          <div class="group">
+            <div class="group-label">Výška jezdce</div>
+            <div class="height-input">
+              <input type="number" id="heightInput" min="100" max="250" value="${riderHeight}" />
+              <span>cm</span>
+            </div>
+          </div>
+        `
+
+        root.querySelectorAll(".group-options button").forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const gid = btn.closest(".group-options").dataset.group
+            const oid = btn.dataset.id
+            handleSelect(gid, oid)
+          })
+        })
+
+        const hInput = document.getElementById("heightInput")
+        if (hInput) {
+          hInput.addEventListener("input", () => {
+            riderHeight = parseInt(hInput.value) || 175
+            updateSummary()
+            updateConfigDesc()
+          })
+        }
+      }
+
+      function handleSelect(gid, oid) {
+        // if already selected, deselect
+        if (sel[gid] === oid) {
+          sel[gid] = null
+          renderOptions()
+          updateAll()
+          return
+        }
+
+        // type changed — reset dependent selections
+        if (gid === "type") {
+          sel.type = oid
+          sel.transmission = null
+          sel.frontDrive = null
+          sel.pedals = null
+          renderOptions()
+          updateAll()
+          return
+        }
+
+        // front drive constraint: elisin requires melinda
+        if (gid === "frontDrive" && oid === "elisin") {
+          sel.frontDrive = "elisin"
+          sel.transmission = "melinda"
+          renderOptions()
+          updateAll()
+          return
+        }
+
+        // transmission changed: if moving away from melinda while elisin is active, reset front drive
+        if (gid === "transmission" && oid !== "melinda" && sel.frontDrive === "elisin") {
+          sel.transmission = oid
+          sel.frontDrive = "none"
+          renderOptions()
+          updateAll()
+          return
+        }
+
+        sel[gid] = oid
+        renderOptions()
+        updateAll()
+      }
+
+      function updateAll() {
+        updatePreview()
+        updateSummary()
+        updateConfigDesc()
+      }
+
+      function updatePreview() {
+        const isBike = sel.type === "bike"
+        document.getElementById("typeBadge").textContent = isBike ? "Kolo" : "Koloběžka"
+        document.getElementById("bikeGroup").style.display = isBike ? "" : "none"
+        document.getElementById("scooterGroup").style.display = isBike ? "none" : ""
+
+        // color frame based on … well, no color option anymore, use a nice default
+        const frameColor = "#e53935"
+        document.querySelectorAll("#sv-frame, #sv-seat, #sv-head, #sv-chain").forEach((el) => {
+          if (el) el.setAttribute("stroke", frameColor)
+        })
+      }
+
+      function labelFor(gid, oid) {
+        const g = groups.find((x) => x.id === gid)
+        if (!g) return ""
+        const o = g.options.find((x) => x.id === oid)
+        return o ? o.label : ""
+      }
+
+      function configSentence() {
+        const parts = []
+        const t = labelFor("type", sel.type)
+        parts.push(t || "Nespecifikovaný typ")
+
+        const b = labelFor("brake", sel.brake)
+        if (b) parts.push("s " + b.toLowerCase())
+
+        const w = labelFor("wheel", sel.wheel)
+        if (w) parts.push("s " + w.toLowerCase())
+
+        if (sel.type === "bike") {
+          const tr = labelFor("transmission", sel.transmission)
+          if (tr) parts.push("s " + tr.toLowerCase())
+
+          const fd = labelFor("frontDrive", sel.frontDrive)
+          if (fd && sel.frontDrive === "elisin") parts.push("s " + fd.toLowerCase())
+
+          const p = labelFor("pedals", sel.pedals)
+          if (p && sel.pedals === "builtin") parts.push("se " + p.toLowerCase())
+          else if (p) parts.push("s " + p.toLowerCase())
+        }
+
+        parts.push(`výška jezdce ${riderHeight} cm`)
+        return parts.join(", ")
+      }
+
+      function updateSummary() {
+        const items = document.getElementById("summaryItems")
+        const picks = visibleGroups()
+          .map((g) => {
+            const o = g.options.find((opt) => opt.id === sel[g.id])
+            return o
+              ? `<span><span style="color:#888;">${g.label}:</span> <span class="val">${o.label}</span></span>`
+              : null
+          })
+          .filter(Boolean)
+        picks.push(`<span><span style="color:#888;">Výška:</span> <span class="val">${riderHeight} cm</span></span>`)
+        items.innerHTML = picks.length ? picks.join("") : '<span style="color:#999;">Zatím nic nevybráno</span>'
+      }
+
+      function updateConfigDesc() {
+        const el = document.getElementById("configDescText")
+        const sentence = configSentence()
+        el.textContent = sentence
+        el.className = sel.type ? "" : "empty"
+      }
+
+      // ── Booking form ──────────────────────────────────────────────────
+      let verifyCode = null
+      let isVerified = false
+
+      function showFeedback(msg, color) {
+        const fb = document.getElementById("formFeedback")
+        fb.textContent = msg
+        fb.style.color = color || "#1a1a2e"
+        fb.style.display = "block"
+      }
+
+      function hideFeedback() {
+        document.getElementById("formFeedback").style.display = "none"
+      }
+
+      document.getElementById("sendCodeBtn").addEventListener("click", async function () {
+        const email = document.getElementById("email").value.trim()
+        if (!email || !email.includes("@")) {
+          showFeedback("Nejprve zadejte platnou e-mailovou adresu", "#d32f2f")
+          return
+        }
+        if (EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY") {
+          showFeedback("EmailJS není nakonfigurován. Nastavte prosím své API klíče v kódu.", "#d32f2f")
+          return
+        }
+
+        verifyCode = String(Math.floor(100000 + Math.random() * 900000))
+        isVerified = false
+        document.getElementById("submitBtn").disabled = true
+        document.getElementById("codeStatus").textContent = ""
+        hideFeedback()
+
+        const btn = document.getElementById("sendCodeBtn")
+        btn.disabled = true
+        btn.textContent = "⏳ Odesílám..."
+
+        try {
+          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TPL_VERIFY, {
+            to_email: email,
+            code: verifyCode,
+          })
+
+          document.getElementById("codeGroup").style.display = "block"
+          document.getElementById("email").disabled = true
+          btn.textContent = "✓ Kód odeslán"
+          showFeedback("Ověřovací kód byl odeslán na váš e-mail", "#2e7d32")
+        } catch (err) {
+          btn.disabled = false
+          btn.textContent = "Odeslat ověřovací kód"
+          showFeedback("Nepodařilo se odeslat kód. Zkuste to později.", "#d32f2f")
+        }
+      })
+
+      document.getElementById("code").addEventListener("input", function () {
+        const val = this.value.trim()
+        const status = document.getElementById("codeStatus")
+        if (val.length === 6) {
+          if (val === verifyCode) {
+            isVerified = true
+            document.getElementById("submitBtn").disabled = false
+            status.textContent = "✓ Ověřeno"
+            status.style.color = "#2e7d32"
+          } else {
+            isVerified = false
+            document.getElementById("submitBtn").disabled = true
+            status.textContent = "✗ Nesprávný kód"
+            status.style.color = "#d32f2f"
+          }
+        } else {
+          isVerified = false
+          document.getElementById("submitBtn").disabled = true
+          status.textContent = ""
+        }
+      })
+
+      document.getElementById("bookingForm").addEventListener("submit", async function (e) {
+        e.preventDefault()
+        if (!isVerified) {
+          showFeedback("Nejprve ověřte svůj e-mail pomocí ověřovacího kódu", "#d32f2f")
+          return
+        }
+
+        if (EMAILJS_PUBLIC_KEY === "YOUR_PUBLIC_KEY") {
+          showFeedback("EmailJS není nakonfigurován. Nastavte prosím své API klíče v kódu.", "#d32f2f")
+          return
+        }
+
+        const btn = document.getElementById("submitBtn")
+        btn.disabled = true
+        btn.textContent = "⏳ Odesílám..."
+
+        const name = document.getElementById("name").value.trim()
+        const email = document.getElementById("email").value.trim()
+        const date = document.getElementById("date").value
+        const message = document.getElementById("message").value.trim()
+        const cfg = configSentence()
+
+        try {
+          // send to admin
+          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TPL_ORDER, {
+            to_email: ADMIN_EMAIL,
+            user_email: email,
+            user_name: name,
+            date,
+            config: cfg,
+            message: message || "—",
+          })
+
+          // send confirmation to user
+          await emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TPL_ORDER, {
+            to_email: email,
+            user_email: email,
+            user_name: name,
+            date,
+            config: cfg,
+            message: message || "—",
+          })
+
+          showFeedback("✅ Děkujeme! Vaše rezervace byla odeslána. Potvrzení dorazí na váš e-mail.", "#2e7d32")
+          this.reset()
+          document.getElementById("date").value = "2030-09-01"
+          document.getElementById("codeGroup").style.display = "none"
+          document.getElementById("email").disabled = false
+          document.getElementById("sendCodeBtn").disabled = false
+          document.getElementById("sendCodeBtn").textContent = "Odeslat ověřovací kód"
+          document.getElementById("submitBtn").disabled = true
+          isVerified = false
+          verifyCode = null
+        } catch (err) {
+          btn.disabled = false
+          btn.textContent = "Odeslat rezervaci"
+          showFeedback("❌ Rezervaci se nepodařilo odeslat. Zkuste to prosím znovu.", "#d32f2f")
+        }
+      })
+
+      // set min date for date input
+      document.getElementById("date").min = "2030-09-01"
+
+      // ── Init ──────────────────────────────────────────────────────────
+      renderOptions()
+      updateAll()
+    </script>
+  </body>
+</html>

@@ -424,17 +424,34 @@
 
     <!-- EmailJS SDK -->
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    <script>
-      const EMAILJS_PUBLIC_KEY = "4DZFBvDg43eAWNKTh"
-      const EMAILJS_SERVICE_ID = "service_vk719pe"
-      const EMAILJS_TPL_VERIFY = "template_0395l1e"
-      const EMAILJS_TPL_ORDER = "template_flsmlum"
-      const ADMIN_EMAIL = "cudloprd@gmail.com"
 
-      if (EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY") {
-        emailjs.init(EMAILJS_PUBLIC_KEY)
+<script>
+  const EMAILJS_PUBLIC_KEY = "4DZFBvDg43eAWNKTh";
+  const EMAILJS_SERVICE_ID = "service_vk719pe";
+  const EMAILJS_TPL_VERIFY = "template_0395l1e";
+
+  emailjs.init(EMAILJS_PUBLIC_KEY);
+
+  function sendVerificationCode(email, code) {
+    return emailjs.send(
+      EMAILJS_SERVICE_ID,
+      EMAILJS_TPL_VERIFY,
+      {
+        email: email,  
+        code: code     
       }
+    );
+  }
 
+  // TEST
+  sendVerificationCode("test@gmail.com", "123456")
+    .then((res) => {
+      console.log("OK:", res);
+    })
+    .catch((err) => {
+      console.error("ERROR:", err);
+    });
+</script>
       // ── Configurator data (no visuals) ──────────────────────────────
       const groups = [
         {
